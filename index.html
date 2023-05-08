@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Subnet Calculator</title>
+    <link rel="stylesheet" type="text/css" href="./css/network.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h4>Subnet Calculation</h4>
+        <form action="#" method="#" class="form">
+            <input type="text" id="ip1" name="ip1" class="form-control" placeholder="192" />•
+            <input type="text" id="ip2" name="ip2" class="form-control" placeholder="168" />•
+            <input type="text" id="ip3" name="ip3" class="form-control" placeholder="0" />•
+            <input type="text" id="ip4" name="ip4" class="form-control" placeholder="1" />
+
+            <select name="prefix" id="prefix" class="btn" onchange="getprefix()">
+                <option selected disabled>Netmark</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+                <option value="32">32</option>
+            </select>
+        </form>
+        <ul class="list-group">
+            <li class="list-group-item">IP Address : <p id="ipaddress">192.168.0.1/24</p>
+            </li>
+            <li class="list-group-item">No of Network : <p id="getnet">1</p>
+            </li>
+            <li class="list-group-item">No of Host Per Network : <p id="gethost">254</p>
+            </li>
+            <li class="list-group-item">Subnet Mark : <p>255.255.255.0</p>
+            </li>
+        </ul>
+    </div>
+
+
+    <script type="text/javascript">
+        function getprefix() {
+            let prefix = Number(document.getElementById('prefix').value);
+            let ip1 = document.getElementById('ip1').value;
+            let ip2 = document.getElementById('ip2').value;
+            let ip3 = document.getElementById('ip3').value;
+            let ip4 = document.getElementById('ip4').value;
+
+            document.getElementById('ipaddress').innerHTML = `${ip1}.${ip2}.${ip3}.${ip4} /${prefix}`;
+            document.getElementById('getnet').innerHTML = `${getNet(prefix)}`;
+            document.getElementById('gethost').innerHTML = `${getHost(prefix)}`;
+
+            console.log(getHost(prefix));
+        }
+
+        function getNet(netmark) {
+            let i, n = 0;
+            var net = 0;
+
+            //8bit
+            if (netmark === 8 || netmark <= 15) {
+                for (i = 8; i <= 15; i++) {
+                    if (i === netmark) {
+                        net = Math.pow(2, n);
+                    }
+                    else if (i < netmark) {
+                        n++;
+                    }
+                }
+            }
+            //16bit
+            if (netmark === 16 || netmark <= 23) {
+                for (i = 16; i <= 23; i++) {
+                    if (i === netmark) {
+                        net = Math.pow(2, n);
+                    }
+                    else if (i < netmark) {
+                        n++;
+                    }
+                }
+            }
+            //24bit
+            if (netmark === 24 || netmark <= 32) {
+                for (i = 24; i <= 32; i++) {
+                    if (i === netmark) {
+                        net = Math.pow(2, n);
+                    }
+                    else if (i < netmark) {
+                        n++;
+                    }
+                }
+            }
+            return net;
+        }
+
+        function getHost(netmark) {
+            let i, n = 24;
+            var Host = 0;
+
+            for (i = 8; i <= 32; i++) {
+                if (i == netmark)
+                    Host =Math.pow(2, n) - 2;
+                else if (i < netmark) {
+                    n--;
+                }
+            }
+            return Host;
+
+        }
+    </script>
+</body>
+
+</html>
